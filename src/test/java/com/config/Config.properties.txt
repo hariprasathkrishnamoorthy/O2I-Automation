@@ -1,0 +1,24 @@
+DriverPath = ./driver/chromedriver.exe
+URL = https://login.hchb.com
+Username = E-GAYATHRI.R
+Password = $umM3rbL!2023
+HCHBInstanceName = HCHB R2 - TSC TRAINING
+
+
+#########
+
+StageFilter1 = Review Eligibility Alert
+StageFilter2 = Review On Demand Eligibility Alert
+
+
+#######
+
+ScratchPadLimit = 1000
+SPAUsername = botadmin@encompass-tsc.com
+SPAPassword = Test123$
+
+BaseURL = https://api-qa.e5.ai
+EndPointURL = /scratch-pad/qa_patient
+
+
+

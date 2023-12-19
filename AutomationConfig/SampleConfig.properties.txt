@@ -1,0 +1,42 @@
+##rename this file "Config.properties" and provide all the values before start the automation
+
+DriverPath = ./driver/chromedriver.exe
+
+#enter your HCHB URL
+URL = https://login.hchb.com
+
+#enter your HCHB username
+Username = Enter username
+
+#enter your HCHB password
+Password = Enter password
+
+
+#enter your HCHB instance name
+HCHBInstanceName = HCHB R2 - TSC TRAINING
+
+#enter your Stage filter 1
+StageFilter1 = Review Eligibility Alert
+
+#enter your stage filter 2
+StageFilter2 = Review On Demand Eligibility Alert
+
+#enter your scratchpadLimit
+ScratchPadLimit = 1000
+
+#enter your Automation hub username
+SPAUsername = botadmin@encompass-tsc.com
+
+
+#enter your Automation hub password
+SPAPassword = Test123$
+
+#enter your SPA URL
+BaseURL = https://api-qa.e5.ai
+
+
+#enter your scratchpad reference "/scratch-pad/your reference name"
+EndPointURL = /scratch-pad/encomp_imagecomp
+
+
+

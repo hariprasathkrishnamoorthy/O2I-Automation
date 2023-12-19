@@ -1,0 +1,58 @@
+{
+"CSV1":{
+  "Agency_Name": "",
+  "Agency_ID": "",
+  "City/State": "",
+  "Report_Period": "",
+  "Report_Run_Date": "",
+  "Submission_Date/Time": "",
+  "Submission_ID": 59385399,
+  "Submitter_User_ID": "",
+  "Submission_File_Name": "",
+  "Submission_File_Status": "",
+  "Completion_Date/TimeName": "",
+  "Total_Records_Processed": "",
+  "Accepted_Records": "",
+  "Rejected_Records": "",
+  "Duplicate_Records": "",
+  "Production_Records_Submitted_Without_Agency_Authority": "",
+  "Total_messages": "",
+  "Record": "",
+  "Status": "Accepted",
+  "Name": "",
+  "XML_Filename": "",
+  "Name(M0040)": "",
+  "SSN(M0064)": "",
+  "Medicare_Number(M0063)": "",
+  "Res_int_ID": "",
+  "RFABranch_ID":"",
+  "Asmt_ID": "",
+  "Correction_Num": "",
+  "M0090_Date": "",
+  "Eff_Date": "",
+  "Type_of_Transaction": "",
+  "OASIS_Item(s)": "",
+  "Data_Submitted": "",
+  "Message_Number/Severity": "",
+  "Message": ""
+},
+
+
+  "CSV2":
+  {
+    "Column1": "false",
+    "Patient Name": "",
+    "MR No.": "",
+    "Payor Type": "MEDICARE",
+    "Payor Source": "PDGM CGS",
+    "Type": "",
+    "NPI": 1790125987,
+    "Visit Date": "",
+    "Version": "3"
+
+  }
+
+
+
+
+}

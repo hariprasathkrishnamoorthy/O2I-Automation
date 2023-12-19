@@ -1,0 +1,64 @@
+{
+ "HCHB": {
+  "URL": "https://login.hchb.com",
+  "ApplicationName": "HCHB R2 - TSC TRAINING",
+  "DatabaseName": "",
+  "Username": "E-GAYATHRI.R",
+  "Password": "$umM3rbL!2023",
+  "Rowcount" : "2476",
+  "AssetName": "",
+  "SelectionFilter": {
+   "Stage": [
+    "Review Eligibility Alert",
+    "Review On Demand Eligibility Alert"
+   ],
+   "Branch": []
+  },
+  "GridFilter": {
+   "DispatcherGridFilter": [
+    {
+     "name": "Payor Type",
+     "ColumnIndex": "3",
+     "Value": "MEDICARE"
+    }
+
+   ],
+   "PerformerGridFilter": [
+    {
+     "name": "Stage",
+     "ColumnIndex": "9"
+
+    },
+
+    {
+     "name": "MR No.",
+     "ColumnIndex": "12"
+
+    }
+
+
+
+   ]
+  }
+ },
+ "AutomationHub": {
+  "URL": "",
+  "ProcessName": ""
+ },
+ "Scratchpad": {
+  "BaseURL": "https://api-qa.e5.ai",
+  "IndexName": "/scratch-pad/encomp_imagecomp",
+  "Username": "",
+  "Password": "",
+  "Limit": "1000"
+
+ },
+
+ "ExcelOperations": {
+
+  "GridExportFilePath": "D:\\Users\\hariprasath.k\\IdeaProjects\\HCHB\\Downloads\\GridData\\PatientRelatedTask.xlsx",
+  "InputExcelFilePath": "D:\\Users\\hariprasath.k\\IdeaProjects\\HCHB\\Downloads\\GridData\\PatientData.xlsx",
+  "ExcelColumnToCopy": ["9","10","12"],
+  "StatusColumnIndex" : "3"
+                    }
+}
