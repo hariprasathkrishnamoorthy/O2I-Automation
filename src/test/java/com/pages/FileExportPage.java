@@ -125,7 +125,11 @@ public class FileExportPage extends UtilityClass {
 
 
     public void SavingFilesToLocal(String Workflowname) throws FindFailed, IOException, ParseException {
-        WaitUntilImageAppear(SaveAsIcon, 2000);
+        WaitUntilImageAppear(SaveAsIcon, 3000);
+        if (screen.exists(filePath + "\\Images\\Citrix_Workspace_Security_Warning_Popup.PNG") != null)
+        {
+            citrixPopup();
+        }
         Match ThisPCmatch = screen.find(This_PC_Button);
         Region ThisPCRegion = new Region(ThisPCmatch.getRect());
         ThisPCRegion.click();
@@ -150,6 +154,7 @@ public class FileExportPage extends UtilityClass {
 
             gridExportFilePath = filePath.replace(":","$");
             gridExportFilePath = "\\\\Client\\" +gridExportFilePath+"\\Downloads\\GridData\\PatientRelatedTask_"+Workflowname+".xlsx";
+            WaitUntilImageAppear(FilepathTextBox,2000);
             Region FilePathTextBoxRegion = new Region(screen.find(FilepathTextBox).getRect());
             FilePathTextBoxRegion.click();
             FilePathTextBoxRegion.type(gridExportFilePath);
@@ -172,6 +177,24 @@ public class FileExportPage extends UtilityClass {
 
 
     }
+
+    public  void citrixPopup()
+    {
+       WaitUntilImageAppear(CitrixSecurityWarningPopup,2000);
+        try{
+        Region CitrixSecurityWarningpopupRegion = new Region(screen.find(CitrixSecurityWarningPopup).getRect());
+        CitrixSecurityWarningpopupRegion.find(CitrixPermitAllOption).click();
+        screen.waitVanish(CitrixSecurityWarningPopup);
+        synchronized (CitrixSecurityWarningPopup) {
+            screen.waitVanish(CitrixSecurityWarningPopup,2000);
+        }
+
+
+
+    }catch (Exception e)
+    {
+        System.out.println(e);
+    }}
 
 
 }

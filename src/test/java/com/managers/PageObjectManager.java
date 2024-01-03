@@ -1,8 +1,11 @@
 package com.managers;
 
 import com.pages.*;
+import org.json.simple.parser.ParseException;
 import org.openqa.selenium.WebDriver;
 import org.sikuli.script.Screen;
+
+import java.io.IOException;
 
 
 public class PageObjectManager {
@@ -58,8 +61,7 @@ public class PageObjectManager {
 
     }
 
-    public OasisConsolepage getOasisConsolepage()
-    {
+    public OasisConsolepage getOasisConsolepage() throws IOException, ParseException {
 
 
         return (OasisConsolepage == null) ? OasisConsolepage = new OasisConsolepage(driver, screen) : OasisConsolepage;

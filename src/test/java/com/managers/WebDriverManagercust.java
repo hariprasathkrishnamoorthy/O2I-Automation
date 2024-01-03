@@ -2,21 +2,21 @@ package com.managers;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 
-public class WebDriverManager {
+public class WebDriverManagercust {
 
     private static WebDriver driver;
 
     private WebDriver createWebDriver(){
-        System.setProperty("webdriver.chrome.driver", "D:\\Users\\hariprasath.k\\IdeaProjects\\HCHB\\driver\\chromedriver.exe");
+        //System.setProperty("webdriver.chrome.driver", "D:\\Users\\hariprasath.k\\IdeaProjects\\HCHB\\driver\\chromedriver.exe");
 
-//        io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
-
+        WebDriverManager.chromedriver().setup();
 
          driver = new ChromeDriver();
 
-        driver.manage().window().maximize();
+         driver.manage().window().maximize();
 
         return driver;
 

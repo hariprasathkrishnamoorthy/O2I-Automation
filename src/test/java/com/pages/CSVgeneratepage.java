@@ -11,6 +11,8 @@ import org.json.simple.parser.ParseException;
 import org.python.antlr.ast.Str;
 
 import java.io.*;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.zip.ZipEntry;
@@ -21,11 +23,14 @@ public class CSVgeneratepage
 
 
     public static void generateCSV() throws java.io.FileNotFoundException, java.io.IOException, ParseException {
-        String excelFilePath =System.getProperty("user.dir")+ File.separator+"Downloads\\GridData\\PatientRelatedTask_WF1.xlsx";
-        String zipFilePath =  System.getProperty("user.dir")+File.separator+"XMLFiles.zip";
-        String csvFilePath1 = System.getProperty("user.dir")+File.separator+"CSV-FILE-1.csv";
-        String csvFilePath2 = System.getProperty("user.dir")+File.separator+"CSV-FILE-2.csv";
-        String csvHeader1 = "Agency Name,Agency ID (FAC_ID),City/State,Report Period,Report Run Date,Submission Date/Time,Submission ID,Submitter User ID,Submission File Name,Submission File Status,Completion Date/TimeName,Total Records Processed,Accepted Records,Rejected Records,Duplicate Records,# Production Records Submitted Without Agency Authority,Total # of messages,Record,Status,Name,XML Filename,Name(M0040),SSN (M0064),Medicare Number(M0063),Res_int_ID,RFABranch ID,Asmt ID,Correction Num,M0090 Date,Eff Date,Type of Transaction,OASIS Item(s),Data Submitted,Message Number/Severity,Message";
+
+        List<String> xlsxFileNames= getXLSXFileNames(System.getProperty("user.dir")+File.separator+"Downloads\\GridData");
+
+        String excelFilePath =System.getProperty("user.dir")+File.separator+"Downloads\\GridData\\"+xlsxFileNames.get(0)+".xlsx";
+        String zipFilePath =  System.getProperty("user.dir")+File.separator+"XMLFiles_"+xlsxFileNames.get(0)+".zip";
+        String csvFilePath1 = System.getProperty("user.dir")+File.separator+"CSV-FILE-1_"+xlsxFileNames.get(0)+".csv";
+        String csvFilePath2 = System.getProperty("user.dir")+File.separator+"CSV-FILE-2_"+xlsxFileNames.get(0)+".csv";
+        String csvHeader1 = "Agency Name,Agency ID (FAC_ID),City/State,Report Period,Report Run Date,Submission Date/Time,Submission ID,Submitter User ID,Submission File Name,Submission File Status,Completion Date/TimeName,Total Records Processed,Accepted Records,Rejected Records,Duplicate Records,# Production Records Submitted Without Agency Authority,Total # of messages,Record,Status,Name,XML Filename,Name (M0040),SSN (M0064),Medicare Number(M0063),Res_int_ID,RFA. BRANCH ID,Asmt ID,Correction Num,M0090 Date,Eff Date,Type of Transaction,OASIS Item(s),Data Submitted,Message Number/Severity,Message";
         String csvHeader2="Column1,Patient Name,MR No.,Payor Type,Payor Source,Type,NPI,Visit Date,Version";
         JsonConfigReader jsreader=FileReaderManager.getJsonConfigReader("CSV_Template.json");
 
@@ -84,7 +89,7 @@ public class CSVgeneratepage
         {
             //--Assuming data is in the first sheet
             Sheet sheet = workbook.getSheetAt(0);
-            // int rowCount=sheet.getLastRowNum();
+            rowcount=sheet.getLastRowNum();
             //--Write header to CSV
             csvWriter1.write(csvHeader1);
             csvWriter1.newLine();
@@ -223,7 +228,7 @@ public class CSVgeneratepage
             String lastNamePart = fullName.substring(0, commaIndex + 1);
 
             // Remove any trailing whitespace
-            lastNamePart = lastNamePart.trim();
+            // lastNamePart = lastNamePart.trim();
 
             // Check if the last part is an initial
             int lastSpaceIndex = fullName.lastIndexOf(" ");
@@ -231,7 +236,7 @@ public class CSVgeneratepage
                 String lastPart = fullName.substring(lastSpaceIndex + 1).trim();
                 if (lastPart.length() == 2 && Character.isLetter(lastPart.charAt(0)) && lastPart.charAt(1) == '.') {
                     // If the last part is an initial, remove it
-                    return lastNamePart + fullName.substring(commaIndex + 1, lastSpaceIndex).trim();
+                    return lastNamePart + fullName.substring(commaIndex + 1, lastSpaceIndex);
                 }
             }
 
@@ -296,6 +301,105 @@ public class CSVgeneratepage
 
 
     }
+
+
+    public static List<String> getXLSXFileNames(String directoryPath) {
+        // List to store .xlsx file names without extension
+        List<String> xlsxFileNames = new ArrayList<>();
+
+        // List all files in the directory
+        File directory = new File(directoryPath);
+
+        if (directory.exists() && directory.isDirectory()) {
+            File[] files = directory.listFiles();
+
+            if (files != null) {
+                // Filter .xlsx files
+                for (File file : files) {
+                    if (file.isFile() && file.getName().toLowerCase().endsWith(".xlsx")) {
+                        // Remove the file extension
+                        String fileNameWithoutExtension = removeExtension(file.getName());
+                        xlsxFileNames.add(fileNameWithoutExtension);
+                    }
+                }
+            }
+        }
+
+        return xlsxFileNames;
+    }
+
+
+    private static String removeExtension(String fileName) {
+        int lastDotIndex = fileName.lastIndexOf(".");
+        if (lastDotIndex != -1) {
+            return fileName.substring(0, lastDotIndex);
+        }
+        return fileName;
+    }
+
+    public static void movezip_csv_xml_files() {
+        // Specify the source and destination directories
+
+        String destinationDirectoryPath = "D:\\Users\\hariprasath.k\\Downloads\\Data";
+
+        // Move files
+        moveFiles(System.getProperty("user.dir"), destinationDirectoryPath);
+
+    }
+
+
+
+    public static void deleteXLSXFiles(String directoryPath) {
+        // List all files in the directory
+        File directory = new File(directoryPath);
+
+        if (directory.exists() && directory.isDirectory()) {
+            File[] files = directory.listFiles();
+
+            if (files != null) {
+                // Delete .xlsx files
+                for (File file : files) {
+                    if (file.isFile() && file.getName().toLowerCase().endsWith(".xlsx")) {
+                        file.delete();
+                        System.out.println("Deleted file: " + file.getAbsolutePath());
+                    }
+                }
+            }
+        } else {
+            System.out.println("Invalid directory path or directory does not exist.");
+        }
+    }
+
+
+    public static void moveFiles(String sourceDirectoryPath, String destinationDirectoryPath) {
+        try {
+            Path sourceDirectory = Paths.get(sourceDirectoryPath);
+            Path destinationDirectory = Paths.get(destinationDirectoryPath);
+
+            Files.list(sourceDirectory)
+                    .filter(Files::isRegularFile)
+                    .filter(file -> !file.getFileName().toString().equals("pom.xml"))
+                    .filter(file -> {
+                        String fileName = file.getFileName().toString();
+                        return fileName.endsWith(".xml") || fileName.endsWith(".csv") || fileName.endsWith(".zip");
+                    })
+                    .forEach(file -> {
+                        try {
+                            Path destinationFile = destinationDirectory.resolve(file.getFileName());
+                            Files.move(file, destinationFile, StandardCopyOption.REPLACE_EXISTING);
+                            System.out.println("Moved file: " + file.toString() + " to " + destinationFile.toString());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 
 
 }

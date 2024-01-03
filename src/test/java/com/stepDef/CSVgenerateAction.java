@@ -10,6 +10,7 @@ import io.cucumber.java.en.Then;
 import org.json.simple.parser.ParseException;
 import org.sikuli.script.FindFailed;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 public class CSVgenerateAction
@@ -21,6 +22,8 @@ public class CSVgenerateAction
     {
 
         CSVgeneratepage.generateCSV();
+        CSVgeneratepage.deleteXLSXFiles(System.getProperty("user.dir")+ File.separator+"Downloads\\GridData");
+        //CSVgeneratepage.movezip_csv_xml_files();
 
     }
 

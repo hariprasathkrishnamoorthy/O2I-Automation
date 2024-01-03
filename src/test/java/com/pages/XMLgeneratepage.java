@@ -27,8 +27,7 @@ import java.nio.channels.FileLock;
 import java.nio.file.StandardOpenOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -41,15 +40,18 @@ public class XMLgeneratepage
     public void generateXMLandzip()
     {
         try {
+
+            List<String> xlsxFileNames= getXLSXFileNames(System.getProperty("user.dir")+File.separator+"Downloads\\GridData");
+
             // Load the Excel workbook
-            Workbook workbook = new XSSFWorkbook(System.getProperty("user.dir")+File.separator+"Downloads\\GridData\\PatientRelatedTask_WF1.xlsx");
+            Workbook workbook = new XSSFWorkbook(System.getProperty("user.dir")+File.separator+"Downloads\\GridData\\"+xlsxFileNames.get(0)+".xlsx");
 
             // Get the first sheet (you can change the sheet index as needed)
             Sheet sheet = workbook.getSheetAt(0);
 
 
             int rowCount = Integer.parseInt(FileReaderManager.getJsonConfigReader().getJsonString("HCHB.Rowcount")) - 1;
-
+            rowCount=sheet.getLastRowNum();
 
             // Loop through all rows in the Excel sheet
             for (int rowIndex = 1; rowIndex <=rowCount; rowIndex++) {
@@ -99,6 +101,7 @@ public class XMLgeneratepage
                         {
                             Cell cell = row.getCell(cellIndex);
                             String[] Namesplit = cell.toString().split(",");
+                            System.out.println(Arrays.toString(Namesplit));
                             String[] firstAndMiddleNameParts = Namesplit[1].trim().split("\\s+");
                             String firstName ="";
                             String middleName = "";
@@ -195,7 +198,7 @@ public class XMLgeneratepage
 
             // Close the workbook
             workbook.close();
-            zipXMLFiles( System.getProperty("user.dir"),"XMLFiles.zip");
+            zipXMLFiles( System.getProperty("user.dir"),"XMLFiles_"+xlsxFileNames.get(0)+".zip");
 
 
         } catch (Exception e) {
@@ -375,6 +378,40 @@ public class XMLgeneratepage
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    public static List<String> getXLSXFileNames(String directoryPath) {
+        // List to store .xlsx file names without extension
+        List<String> xlsxFileNames = new ArrayList<>();
+
+        // List all files in the directory
+        File directory = new File(directoryPath);
+
+        if (directory.exists() && directory.isDirectory()) {
+            File[] files = directory.listFiles();
+
+            if (files != null) {
+                // Filter .xlsx files
+                for (File file : files) {
+                    if (file.isFile() && file.getName().toLowerCase().endsWith(".xlsx")) {
+                        // Remove the file extension
+                        String fileNameWithoutExtension = removeExtension(file.getName());
+                        xlsxFileNames.add(fileNameWithoutExtension);
+                    }
+                }
+            }
+        }
+
+        return xlsxFileNames;
+    }
+
+    private static String removeExtension(String fileName) {
+        int lastDotIndex = fileName.lastIndexOf(".");
+        if (lastDotIndex != -1) {
+            return fileName.substring(0, lastDotIndex);
+        }
+        return fileName;
     }
 
 

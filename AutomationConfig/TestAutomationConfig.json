@@ -1,11 +1,15 @@
 {
  "HCHB": {
   "URL": "https://login.hchb.com",
-  "ApplicationName": "HCHB R2 - TSC TRAINING",
+  "ApplicationName": "HCHB R2 - LHC RC TEST",
   "DatabaseName": "",
-  "Username": "E-GAYATHRI.R",
-  "Password": "$umM3rbL!2023",
-  "Rowcount" : "2476",
+  "Username": "BOT1.OASIS",
+  "Password": "LHChchb2023!!",
+  "Rowcount" : "14",
+   "Status"   : "ACCEPTED",
+   "Facility" : "ACR",
+   "FromDate" : "09/25/2023",
+   "ToDate": "12/25/2023",
   "AssetName": "",
   "SelectionFilter": {
    "Stage": [

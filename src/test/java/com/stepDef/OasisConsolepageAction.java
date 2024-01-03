@@ -1,5 +1,6 @@
 package com.stepDef;
 
+import com.config.JsonConfigReader;
 import com.utility.UtilityClass;
 import com.managers.FileReaderManager;
 import com.managers.TextContext;
@@ -18,8 +19,7 @@ public class OasisConsolepageAction  extends UtilityClass
     TextContext textContext;
 
 
-    public OasisConsolepageAction(TextContext context) throws URISyntaxException
-    {
+    public OasisConsolepageAction(TextContext context) throws URISyntaxException, IOException, ParseException {
 
         this.textContext = context;
         OasisConsolepage = textContext.getPageObjectManager().getOasisConsolepage();
@@ -39,7 +39,9 @@ public class OasisConsolepageAction  extends UtilityClass
     @Then("Apply the status selection for workflow1")
     public void applyTheStatusSelectionwf1() throws FindFailed, InterruptedException, IOException, ParseException
     {
-        OasisConsolepage.applyStatusSelection("LOCKED");
+        JsonConfigReader jsreader=FileReaderManager.getJsonConfigReader();
+        String Status  = jsreader.getJsonString("HCHB.Status");
+        OasisConsolepage.applyStatusSelection(Status);
 
     }
 
